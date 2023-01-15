@@ -3,7 +3,7 @@ guid: e0ee89bc3b8e2479eac76163da34cc5d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,7 +63,6 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -141,7 +140,7 @@ TextureImporter:
       name: sprites_1
       rect:
         serializedVersion: 2
-        x: 33
+        x: 32
         y: 0
         width: 32
         height: 32
@@ -159,10 +158,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprites_2
+      name: block_single_grass
       rect:
         serializedVersion: 2
-        x: 66
+        x: 64
         y: 0
         width: 32
         height: 32
@@ -184,10 +183,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprites_3
+      name: block_left_grass
       rect:
         serializedVersion: 2
-        x: 99
+        x: 96
         y: 0
         width: 32
         height: 32
@@ -209,10 +208,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprites_4
+      name: block_center_grass
       rect:
         serializedVersion: 2
-        x: 132
+        x: 128
         y: 0
         width: 32
         height: 32
@@ -234,10 +233,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprites_5
+      name: block_center_grass_2
       rect:
         serializedVersion: 2
-        x: 165
+        x: 160
         y: 0
         width: 32
         height: 32
@@ -259,10 +258,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprites_6
+      name: block_right_grass
       rect:
         serializedVersion: 2
-        x: 198
+        x: 192
         y: 0
         width: 32
         height: 32
@@ -283,6 +282,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: player_1
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95cef44da771dd94e80bc77f3dff3e4f
+      internalID: 1315692810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -294,13 +314,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      player_1: 1315692810
+      block_single_grass: -316954056
       sprites_1: 32066243
+      block_left_grass: 1272193182
+      block_center_grass_2: -1407229104
       sprites_0: 1014632269
-      sprites_2: -316954056
-      sprites_5: -1407229104
-      sprites_3: 1272193182
-      sprites_4: -1929742133
-      sprites_6: -45620336
+      block_right_grass: -45620336
+      block_center_grass: -1929742133
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

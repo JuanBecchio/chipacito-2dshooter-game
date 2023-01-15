@@ -2,26 +2,34 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    public Transform graphics;
-    public ParticleSystem runParticles;
-    public float moveSpeed = 10f;
-    public float jumpForce = 10f;
-
-    public BoxCollider2D groundCheckCollider;
-    public LayerMask groundLayers;
+    [SerializeField] private Transform graphics;
+    [SerializeField] private SpriteRenderer graphicsRenderer;
+    [SerializeField] private ParticleSystem runParticles;
+    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private BoxCollider2D groundCheckCollider;
+    [SerializeField] private LayerMask groundLayers;
 
     private Rigidbody2D rb2d;
+
+    private bool lookR = true;
 
     void Start()
     {
         if (!graphics) graphics = transform.GetChild(0);
+        if (!graphicsRenderer) graphicsRenderer = graphics.GetComponentInChildren<SpriteRenderer>();
         rb2d = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        rb2d.velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, rb2d.velocity.y);
+        float x = Input.GetAxis("Horizontal");
+        if (x < 0 && lookR)
+            Flip();
+        else if (x > 0 && !lookR)
+            Flip();
+
+        rb2d.velocity = new Vector2(x * moveSpeed, rb2d.velocity.y);
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
             OnJump();
@@ -30,6 +38,13 @@ public class PlayerMovement : MonoBehaviour
             rb2d.gravityScale = 2f;
         else if (rb2d.velocity.y >= 2f && rb2d.gravityScale < 2f)
             rb2d.gravityScale = 1f;
+    }
+
+    void Flip()
+    {
+        lookR = !lookR;
+        if (graphicsRenderer)
+            graphicsRenderer.flipX = !lookR;
     }
 
     void OnJump()
