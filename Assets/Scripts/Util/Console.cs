@@ -37,6 +37,7 @@ public static class Console
             }
             format += string.Format(" <color={0}>{1}</color>", color, "{" + i + "}");
         }
+        Debug.Log(string.Format("<color=#FF2222>" + format + "</color>", args));
     }
     public static void Warn(params object[] args)
     {

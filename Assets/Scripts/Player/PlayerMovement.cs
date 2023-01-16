@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb2d;
 
     private bool lookR = true;
+    private bool isGrounded = false;
 
     void Start()
     {
@@ -31,7 +32,11 @@ public class PlayerMovement : MonoBehaviour
 
         rb2d.velocity = new Vector2(x * moveSpeed, rb2d.velocity.y);
 
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        if (x != 0 && isGrounded)
+            graphics.LeanRotateZ(Mathf.Sin(Mathf.Abs(moveSpeed * 2f) * Time.time * 2) * 5, 0.1f).setEase(LeanTweenType.easeOutBack);
+        else graphics.LeanRotateZ(-x * 2, 0.1f).setEase(LeanTweenType.easeOutBack);
+
+        if (Input.GetButtonDown("Jump") && CheckGround())
             OnJump();
 
         if (rb2d.velocity.y <= 0 || Input.GetButtonUp("Jump"))
@@ -59,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnLand(float xVel = 1)
     {
+        isGrounded = true;
         LeanTween.cancel(graphics.gameObject);
         graphics.LeanScaleX(1 + xVel / 10, 0.05f);
         graphics.LeanScaleY(1 - xVel / 10, 0.05f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => graphics.LeanScale(Vector3.one, 0.1f).setEase(LeanTweenType.easeOutBack));
@@ -68,13 +74,25 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnAir()
     {
+        isGrounded = false;
         if (runParticles)
             runParticles.Stop();
     }
 
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (CheckGround())
+            OnLand(Mathf.Clamp(Mathf.Floor(collision.relativeVelocity.y), 0, 4));
+        else OnAir();
+    }
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (isGrounded && !CheckGround())
+            OnAir();
+    }
 
-    bool IsGrounded()
+    bool CheckGround()
     {
         if (!groundCheckCollider)
         {
@@ -90,15 +108,5 @@ public class PlayerMovement : MonoBehaviour
                     Vector2.Distance(transform.position, groundCheckCollider.transform.position),
                     groundLayers
                 ); ;
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (IsGrounded())
-            OnLand(Mathf.Clamp(Mathf.Floor(collision.relativeVelocity.y), 0, 4));
-    }
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        OnAir();
     }
 }
