@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
         if (!graphics) graphics = transform.GetChild(0);
         if (!graphicsRenderer) graphicsRenderer = graphics.GetComponentInChildren<SpriteRenderer>();
         rb2d = GetComponent<Rigidbody2D>();
+
     }
 
     void Update()
@@ -39,10 +40,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && CheckGround())
             OnJump();
 
-        if (rb2d.velocity.y <= 0 || Input.GetButtonUp("Jump"))
-            rb2d.gravityScale = 2f;
-        else if (rb2d.velocity.y >= 2f && rb2d.gravityScale < 2f)
-            rb2d.gravityScale = 1f;
+        if (!isGrounded)
+        {
+            if (rb2d.velocity.y <= jumpForce * 0.2f || Input.GetButtonUp("Jump"))
+                rb2d.gravityScale = 4f;
+        }
+        if (!isGrounded && CheckGround())
+            OnLand(Mathf.Clamp(Mathf.Floor(Mathf.Abs(rb2d.velocity.y)), 1, 4));
+        else if (isGrounded && !CheckGround()) OnAir();
     }
 
     void Flip()
@@ -54,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJump()
     {
-        rb2d.gravityScale = 0.2f;
+        rb2d.gravityScale = 1f;
         rb2d.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         LeanTween.cancel(graphics.gameObject);
         graphics.LeanScaleX(1.25f, 0.05f);
@@ -77,19 +82,6 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = false;
         if (runParticles)
             runParticles.Stop();
-    }
-
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (CheckGround())
-            OnLand(Mathf.Clamp(Mathf.Floor(collision.relativeVelocity.y), 0, 4));
-        else OnAir();
-    }
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (isGrounded && !CheckGround())
-            OnAir();
     }
 
     bool CheckGround()
