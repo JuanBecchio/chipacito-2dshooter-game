@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb2d;
 
-    private bool lookR = true;
+    [HideInInspector] public bool lookR = true;
     private bool isGrounded = false;
 
     void Start()
