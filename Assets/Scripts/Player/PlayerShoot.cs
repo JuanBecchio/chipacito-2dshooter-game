@@ -22,7 +22,8 @@ public class PlayerShoot : MonoBehaviour
             Vector3 bPos = bulletOut.position;
             if (!movementScript.lookR)
                 bPos.x = transform.position.x - bulletOut.localPosition.x;
-            GameObject bullet = Instantiate(bulletPrefab, bPos, Quaternion.identity);
+            BulletScript bullet = Instantiate(bulletPrefab, bPos, Quaternion.identity).GetComponent<BulletScript>();
+            bullet.Shoot(movementScript.lookR);
         }
 
     }

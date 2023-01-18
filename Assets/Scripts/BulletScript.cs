@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D rb2d;
-    // Start is called before the first frame update
-    void Start()
+    public void Shoot(bool toRight)
     {
-        if (!rb2d) rb2d = GetComponent<Rigidbody2D>();
-        rb2d.AddForce(Vector2.left * 2, ForceMode2D.Impulse);
+        transform.LeanMoveLocalX(toRight ? 12 : -12, 0.4f).setOnComplete(() => Destroy(gameObject, 0.1f));
     }
 
-    // Update is called once per fram
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        Destroy(gameObject);
+    }
 }
