@@ -23,7 +23,7 @@ public class PlayerShoot : MonoBehaviour
             if (!movementScript.lookR)
                 bPos.x = transform.position.x - bulletOut.localPosition.x;
             BulletScript bullet = Instantiate(bulletPrefab, bPos, Quaternion.identity).GetComponent<BulletScript>();
-            bullet.Shoot(movementScript.lookR);
+            bullet.Shoot(movementScript.lookR, gameObject);
         }
 
     }
